@@ -1,3 +1,18 @@
+/**
+ * Dialog Component - shadcn/ui Dialog
+ * 
+ * Modal dialog component built on Radix UI primitives
+ * Used for ModalVideo component to display video in a modal overlay
+ * 
+ * Features:
+ * - Accessible (keyboard navigation, focus management, ARIA attributes)
+ * - Animations (fade in/out, scale, slide)
+ * - Overlay backdrop
+ * - Close button
+ * - Portal rendering (renders outside DOM hierarchy)
+ * 
+ * This is a shadcn/ui component - see: https://ui.shadcn.com/docs/components/dialog
+ */
 "use client";
 
 import * as React from "react";
@@ -6,14 +21,17 @@ import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-const Dialog = DialogPrimitive.Root;
+// Export Radix UI primitives as named exports
+const Dialog = DialogPrimitive.Root; // Root component that manages dialog state
+const DialogTrigger = DialogPrimitive.Trigger; // Element that opens the dialog
+const DialogPortal = DialogPrimitive.Portal; // Portals content outside DOM hierarchy
+const DialogClose = DialogPrimitive.Close; // Element that closes the dialog
 
-const DialogTrigger = DialogPrimitive.Trigger;
-
-const DialogPortal = DialogPrimitive.Portal;
-
-const DialogClose = DialogPrimitive.Close;
-
+/**
+ * DialogOverlay - Backdrop that appears behind dialog content
+ * Uses forwardRef to allow parent components to access the DOM node
+ * Includes fade-in/out animations based on dialog state
+ */
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
@@ -29,6 +47,15 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+/**
+ * DialogContent - Main content container for the dialog
+ * Wraps content in a Portal and includes overlay
+ * Features:
+ * - Centered positioning (50% top/left with transform)
+ * - Responsive width (90vw mobile, 70vw tablet, 40vw desktop)
+ * - Animations (fade, zoom, slide)
+ * - Built-in close button (X icon)
+ */
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
@@ -44,6 +71,7 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
+      {/* Close button with X icon - positioned absolutely outside content area */}
       <DialogPrimitive.Close className="absolute -right-2 -top-10 xl:-right-7 rounded-sm opacity-80 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400">
         <X className="h-8 w-8 text-white" />
         <span className="sr-only">Close</span>
@@ -53,6 +81,10 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
+/**
+ * DialogHeader - Container for dialog title and description
+ * Responsive text alignment (centered on mobile, left on desktop)
+ */
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn("flex flex-col space-y-1.5 text-center sm:text-left", className)}
@@ -61,6 +93,10 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogHeader.displayName = "DialogHeader";
 
+/**
+ * DialogFooter - Container for dialog actions (buttons)
+ * Responsive layout: stacked on mobile, row on desktop
+ */
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
@@ -72,6 +108,10 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogFooter.displayName = "DialogFooter";
 
+/**
+ * DialogTitle - Accessible title for the dialog
+ * Uses Radix UI primitive for proper ARIA attributes
+ */
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
@@ -84,6 +124,10 @@ const DialogTitle = React.forwardRef<
 ));
 DialogTitle.displayName = DialogPrimitive.Title.displayName;
 
+/**
+ * DialogDescription - Accessible description for the dialog
+ * Provides additional context for screen readers
+ */
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>

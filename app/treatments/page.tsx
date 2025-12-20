@@ -1,3 +1,14 @@
+/**
+ * Treatments Page Component
+ * 
+ * Displays available skincare treatments in a grid layout:
+ * - Classic Facial
+ * - Chemical Peel
+ * - Eyebrow Waxing/Shaping
+ * - HydraFacial
+ * 
+ * Includes treatment image and call-to-action button
+ */
 "use client";
 import { motion } from "framer-motion";
 import { useCursor } from "@/context/CursorContext";
@@ -5,6 +16,7 @@ import Image from "next/image";
 import TreatmentsItem from "@/components/TreatmentsItem";
 
 const Treatments = () => {
+  // Get cursor handlers for interactive hover effects
   const { mouseEnterHandler, mouseLeaveHandler } = useCursor();
 
   return (
@@ -35,8 +47,14 @@ const Treatments = () => {
               care for radiant skin
             </p>
             {/* items */}
+            {/* 
+              Treatments grid layout:
+              - 1 column on mobile (grid-cols-1)
+              - 2 columns on medium screens and up (md:grid-cols-2)
+            */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[20px] mb-14 mx-auto xl:mx-0">
               {/* item */}
+              {/* Each TreatmentsItem displays a treatment name and description */}
               <TreatmentsItem
                 title="Classic Facial"
                 description="Deep cleansing, exfoliation and hydration for a refreshed complexion"
@@ -55,9 +73,14 @@ const Treatments = () => {
               />
             </div>
             {/* btn */}
+            {/* Call-to-action button */}
             <button className="btn mx-auto xl:mx-0">Discover more</button>
           </motion.div>
           {/* image */}
+          {/* 
+            Treatment image - hidden on mobile, visible on desktop
+            Animates from right (x: 60) to center on load
+          */}
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             animate={{
@@ -69,6 +92,10 @@ const Treatments = () => {
             onMouseLeave={mouseLeaveHandler}
             className="hidden xl:flex w-[384px] h-[534px] relative"
           >
+            {/* 
+              Next.js Image with fill prop for responsive sizing
+              Hidden on mobile (hidden xl:flex) to prioritize content
+            */}
             <Image
               src="/assets/treatments/img.jpg"
               fill
