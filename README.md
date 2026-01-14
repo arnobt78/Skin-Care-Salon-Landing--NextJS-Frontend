@@ -1,4 +1,4 @@
-# Premium Skincare Salon - Next.js, React, TypeScript, TailwindCSS Frontend Project
+# Premium Skincare Salon - Next.js, TypeScript, TailwindCSS, Framer-Motion Frontend Project
 
 A modern, responsive, and animated frontend website built with Next.js 14, React, TypeScript, and TailwindCSS. This project demonstrates how to build a professional skincare salon website with smooth animations, custom cursor interactions, and a modular component structure.
 
